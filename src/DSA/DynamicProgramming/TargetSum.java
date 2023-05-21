@@ -6,33 +6,33 @@ import java.util.*;
 public class TargetSum{
     public static void main(String[] args) {
         int weights[] = {4, 2, 7, 1, 3};
-        int sum = 10;
-        System.out.println("The subset = "+knapsack(weights,sum));
+        int value[] = {15,14,10,45,30};
+        System.out.println("Max profit = "+knapsack(weights,value));
     }
-    public static boolean knapsack(int[] weights, int sum){
-        boolean table[][] = new boolean[weights.length+1][sum+1];
+    public static int knapsack(int[] weights, int[] value){
+        int table[][] = new int[weights.length+1][value.length+1];
         for(int i = 0; i < weights.length+1; i++){//table base case initialization
-            table[i][0] = true;
+            table[i][0] = 0;
+            table[0][i] = 0;
         }
         /*
          * i: items @column
          * j: weights @rows
          * */
-        for(int i = 1; i < weights.length+1; i++) {//table initialization
-            for (int j = 1; j < sum + 1; j++) {
-                int v = weights[i - 1];
-                if (v <= j && table[i][j - v] == true) {//include
-                    table[i][j] = true;
-                } else if (table[i-1][j] == true){//exclude
-                    table[i][j] = true;
+        for(int i = 1; i < value.length+1; i++) {//table initialization
+            for (int j = 1; j < weights.length + 1; j++) {
+                if (weights[i - 1] <= j) {//include
+                    table[i][j] = Math.max(value[i-1]+table[i][j - weights[i-1]], table[i][j-weights[i-1]]);
+                } else {//exclude
+                    table[i][j] = table[i-1][j];
                 }
             }
         }
         printTable(table);
-        return table[weights.length][sum];
+        return table[weights.length][value.length];
     }
-    public static void printTable(boolean[][] table){
-        for (boolean[] i : table){
+    public static void printTable(int[][] table){
+        for (int[] i : table){
             for(int j = 0; j < i.length; j++){
                 System.out.print(i[j]+" ");
             }
