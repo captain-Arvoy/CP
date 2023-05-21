@@ -1,0 +1,3 @@
+---------------------------------0-1 Knapsack-------------------
+1) There are 2 choices for every item. Either 0 or 1 provided that
+the item weighs less than the available weight.
