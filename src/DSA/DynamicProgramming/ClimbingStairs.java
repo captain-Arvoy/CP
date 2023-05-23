@@ -2,25 +2,23 @@
 package DSA.DynamicProgramming;
 import java.util.*;
 public class ClimbingStairs {
-    static int ans = 0;
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         System.out.print("Enter the number of stairs: ");
         int n = sc.nextInt();
-
-        int stepIndex = 0;
-        waysToClimb(n,stepIndex);
-        System.out.println(ans);
+        int stepIndex = 0, ans = 0;
+        System.out.println(waysToClimb(n));
     }
-    public static void waysToClimb(int n, int stepIndex){
-        if (stepIndex == n){
-            ans++;
+    public static int waysToClimb(int n){
+
+        if (n == 0){
+            return 1;
         }
-        if (stepIndex > n){
-            return;
+        if (n < 0){
+            return 0;
         }
 
-        waysToClimb(n, stepIndex+1);
-        waysToClimb(n,stepIndex+2);
+        return waysToClimb(n-1)+waysToClimb(n-2);
+
     }
 }
